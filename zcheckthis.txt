@@ -1,0 +1,12 @@
+npm run dev
+
+run karne ke liye ye terminal pe paste karna hai 
+and
+http://localhost:3000          ye link paste karna hai website pe nahi toh agar sidha chat pe jana hai toh
+
+http://localhost:3000/chat        ispe chal jana hai 
+
+
+nahi toh vercel ka link bhi hai
+https://ai-app-beryl-one.vercel.app/
+
