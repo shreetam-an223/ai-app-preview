@@ -1,35 +1,58 @@
 import { NextRequest } from "next/server";
-import { AI_CONFIG } from "@/lib/ai-config";
+import { executeAuditTool, AuditToolInput } from "@/lib/tools/audit-tool";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
-    const lastUserMessage = messages[messages.length - 1]?.content || "Hello";
+    const lastMessage = messages[messages.length - 1]?.content || "";
 
-    // Prepare simulated streaming chunks (or integrate with Anthropic API if key is set)
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    // Check if the user is triggering a tool run (or test error)
+    const isToolCall = lastMessage.toLowerCase().includes("audit") || lastMessage.toLowerCase().includes("test");
 
-    // Default: High-fidelity deterministic token streaming simulation
-    const responseTemplate = `I received your prompt: "${lastUserMessage}".
+    if (isToolCall) {
+      const isSimulatedError = lastMessage.toLowerCase().includes("fail") || lastMessage.toLowerCase().includes("error");
+      const targetUrl = isSimulatedError ? "https://fail.local/api" : "https://ai-app-preview.vercel.app/playground";
 
-Here is the production breakdown:
-1. **Streaming Protocol**: Data arrives chunk-by-chunk via ReadableStream over HTTP.
-2. **Deterministic State**: State is preserved across multiple turns without UI flicker.
-3. **Accessibility**: Screen reader live regions and keyboard controls remain active during generation.
+      const toolInput: AuditToolInput = {
+        targetUrl,
+        auditScope: "accessibility",
+      };
 
-Feel free to stop generation mid-stream or ask a follow-up question!`;
+      try {
+        const result = await executeAuditTool(toolInput);
+        return new Response(
+          JSON.stringify({
+            type: "tool-response",
+            toolName: "auditFrontendRoute",
+            input: toolInput,
+            output: result,
+          }),
+          { headers: { "Content-Type": "application/json" } }
+        );
+      } catch (err) {
+        return new Response(
+          JSON.stringify({
+            type: "tool-error",
+            toolName: "auditFrontendRoute",
+            input: toolInput,
+            errorMessage: err instanceof Error ? err.message : "Failed to execute audit tool",
+          }),
+          { headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
 
+    // Standard streaming chat fallback
     const encoder = new TextEncoder();
-    const tokens = responseTemplate.split(" ");
+    const tokens = `I am ready. Type "audit" to trigger our server-side structured audit tool, or type "audit fail" to test designed error recovery!`.split(" ");
 
     const stream = new ReadableStream({
       async start(controller) {
         for (let i = 0; i < tokens.length; i++) {
           const chunk = (i === 0 ? "" : " ") + tokens[i];
           controller.enqueue(encoder.encode(chunk));
-          // Realistic token streaming delay (35ms per token)
           await new Promise((resolve) => setTimeout(resolve, 35));
         }
         controller.close();
@@ -37,16 +60,12 @@ Feel free to stop generation mid-stream or ask a follow-up question!`;
     });
 
     return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Transfer-Encoding": "chunked",
-        "Cache-Control": "no-cache, no-transform",
-      },
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: "Failed to process chat stream" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ error: "Failed chat stream" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
