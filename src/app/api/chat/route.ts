@@ -6,13 +6,28 @@ export const runtime = "nodejs";
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
-    const lastMessage = messages[messages.length - 1]?.content || "";
+    const lastMessage = (messages[messages.length - 1]?.content || "").trim().toLowerCase();
 
-    // Check if the user is triggering a tool run (or test error)
-    const isToolCall = lastMessage.toLowerCase().includes("audit") || lastMessage.toLowerCase().includes("test");
+    // 1. Sabotage Case: Rate Limit (HTTP 429)
+    if (lastMessage.includes("sabotage 429") || lastMessage.includes("rate limit")) {
+      return new Response(
+        JSON.stringify({ error: "Rate limit exceeded. Standard quota allows 5 requests/min." }),
+        { status: 429, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
+    // 2. Sabotage Case: Immediate Server / Network Failure (HTTP 500)
+    if (lastMessage.includes("sabotage network") || lastMessage.includes("server error")) {
+      return new Response(
+        JSON.stringify({ error: "Upstream gateway connection dropped mid-handshake." }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // 3. Tool execution flow
+    const isToolCall = lastMessage.includes("audit") || lastMessage.includes("test");
     if (isToolCall) {
-      const isSimulatedError = lastMessage.toLowerCase().includes("fail") || lastMessage.toLowerCase().includes("error");
+      const isSimulatedError = lastMessage.includes("fail") || lastMessage.includes("error");
       const targetUrl = isSimulatedError ? "https://fail.local/api" : "https://ai-app-preview.vercel.app/playground";
 
       const toolInput: AuditToolInput = {
@@ -44,28 +59,42 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Standard streaming chat fallback
+    // 4. Sabotage Case: Interrupted Mid-Stream Abort
+    const willKillMidStream = lastMessage.includes("sabotage stream");
+
+    const responseTemplate = willKillMidStream
+      ? "Initiating stream transmission... Token 1... Token 2... [Simulated Network Disconnect Occurred]"
+      : `Streaming response for: "${lastMessage}". All core streaming protocols operational. Try testing edge cases using the quick buttons or sabotage prompts.`;
+
     const encoder = new TextEncoder();
-    const tokens = `I am ready. Type "audit" to trigger our server-side structured audit tool, or type "audit fail" to test designed error recovery!`.split(" ");
+    const tokens = responseTemplate.split(" ");
 
     const stream = new ReadableStream({
       async start(controller) {
         for (let i = 0; i < tokens.length; i++) {
+          if (willKillMidStream && i >= 4) {
+            controller.error(new Error("Stream terminated unexpectedly: socket reset by peer."));
+            return;
+          }
           const chunk = (i === 0 ? "" : " ") + tokens[i];
           controller.enqueue(encoder.encode(chunk));
-          await new Promise((resolve) => setTimeout(resolve, 35));
+          await new Promise((resolve) => setTimeout(resolve, 40));
         }
         controller.close();
       },
     });
 
     return new Response(stream, {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Cache-Control": "no-cache, no-transform",
+      },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ error: "Failed chat stream" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({ error: "Internal server execution failure." }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
