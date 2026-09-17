@@ -2,35 +2,75 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6">
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-800 bg-slate-900/80 text-xs text-sky-400 font-mono">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-        Production Deployment • Empty but Live
-      </div>
-
-      <div className="space-y-3 max-w-2xl">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-white">
-          Shreetam Anand
+    <main className="min-h-[calc(100vh-140px)] flex flex-col justify-center max-w-4xl mx-auto px-4 py-12">
+      {/* Hero Section */}
+      <div className="space-y-4">
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+          Hi, I&apos;m <span className="text-sky-400">Shreetam Anand</span>.
         </h1>
-        <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
+        <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
           I build and verify reliable, production-ready AI software interfaces with measurable execution speed and deterministic code quality.
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+      {/* Action Links Required by Assignment */}
+      <div className="flex flex-wrap gap-3 mt-8">
+        <a
+          href="https://github.com/shreetam-an223"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium border border-slate-700 transition"
+        >
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/your-profile" 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium border border-slate-700 transition"
+        >
+          CV / Resume
+        </a>
+        <a
+          href="https://cal.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-400 text-sm font-medium border border-sky-500/30 transition"
+        >
+          Book a Call
+        </a>
+      </div>
+
+      {/* Your Existing Project Links */}
+      <div className="mt-14 pt-10 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link
           href="/chat"
-          className="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-medium text-sm transition"
+          className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition group"
         >
-          Open Streaming Chat →
+          <div className="text-xs font-mono text-sky-400 mb-1">Interactive Feature</div>
+          <h3 className="text-base font-semibold text-white group-hover:text-sky-300 transition">
+            Streaming Chat &rarr;
+          </h3>
         </Link>
+
         <Link
           href="/playground"
-          className="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm border border-slate-700 transition"
+          className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition group"
         >
-          Accessible Playground
+          <div className="text-xs font-mono text-sky-400 mb-1">Design System</div>
+          <h3 className="text-base font-semibold text-white group-hover:text-sky-300 transition">
+            Accessible Playground &rarr;
+          </h3>
         </Link>
       </div>
-    </div>
+    </main>
   );
 }
