@@ -40,10 +40,12 @@ export default function Home() {
           CV / Resume
         </a>
         <a
-          href="mailto:anandshreetam.223@gmail.com?subject=Engineering%20Inquiry"
-          className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-400 text-sm font-medium border border-sky-500/30 transition"
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=anandshreetam.223@gmail.com&su=Engineering%20Inquiry"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-400 text-sm font-medium border border-sky-500/30 transition"
         >
-          Contact Me
+        Contact Me
         </a>
       </div>
 
