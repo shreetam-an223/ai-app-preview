@@ -24,7 +24,7 @@ export default function Home() {
           GitHub
         </a>
         <a
-          href="https://linkedin.com/in/your-profile" 
+          href="https://www.linkedin.com/in/shreetam-anand-ba6147372" 
           target="_blank"
           rel="noopener noreferrer"
           className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition"
@@ -40,12 +40,10 @@ export default function Home() {
           CV / Resume
         </a>
         <a
-          href="https://cal.com"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="mailto:anandshreetam.223@gmail.com?subject=Engineering%20Inquiry"
           className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-sky-400 text-sm font-medium border border-sky-500/30 transition"
         >
-          Book a Call
+          Contact Me
         </a>
       </div>
 
