@@ -2,12 +2,12 @@
   "name": "ai-app-preview",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "agent:run": "node scripts/run-scout-agent.mjs"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "agent:run": "node scripts/run-scout-agent.mjs"
   },
   "dependencies": {
     "next": "16.3.2",
@@ -16,7 +16,7 @@
     "zod": "^4.6.4"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

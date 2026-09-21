@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import "./globals.css";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "AI Production Preview Workspace",
-  description: "Next.js App Router workspace with streaming AI chat, accessible components, and system health checks.",
+  description:
+    "Next.js App Router workspace with streaming AI chat, accessible components, and system health checks.",
 };
 
 export default function RootLayout({
@@ -17,7 +18,10 @@ export default function RootLayout({
       <body className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
         <header className="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-40">
           <nav className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-            <Link href="/" className="font-bold text-white tracking-tight flex items-center gap-2">
+            <Link
+              href="/"
+              className="font-bold text-white tracking-tight flex items-center gap-2"
+            >
               <span className="w-2.5 h-2.5 rounded-full bg-sky-400" />
               AI Production Preview
             </Link>
@@ -34,6 +38,9 @@ export default function RootLayout({
               </Link>
               <Link href="/health" className="hover:text-sky-400 transition">
                 Health Check
+              </Link>
+              <Link href="/buttons" className="hover:text-sky-400 transition">
+                Buttons
               </Link>
             </div>
           </nav>
