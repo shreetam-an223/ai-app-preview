@@ -50,27 +50,39 @@ export default function Home() {
       </div>
 
       {/* Your Existing Project Links */}
-      <div className="mt-14 pt-10 border-t border-slate-800 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mt-8">
+        {/* Card 1: Micro-interactions */}
         <Link
-          href="/chat"
-          className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition group"
-        >
-          <div className="text-xs font-mono text-sky-400 mb-1">Interactive Feature</div>
-          <h3 className="text-base font-semibold text-white group-hover:text-sky-300 transition">
-            Streaming Chat &rarr;
+          href="/buttons"
+          className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 transition-all group block"
+          >
+          <span className="text-xs uppercase tracking-wider text-cyan-400 font-semibold block">
+          Interactive Feature & Motion
+          </span>
+          <h3 className="text-lg font-bold text-white mt-1 group-hover:text-cyan-300">
+           Buttons with a Brain &rarr;
           </h3>
+          <p className="text-xs text-slate-400 mt-2">
+            Deterministic micro-interactions, optimistic state changes, and error recovery choreography.
+           </p>
         </Link>
 
+           {/* Card 2: Serverless Dispatch */}
         <Link
-          href="/playground"
-          className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition group"
-        >
-          <div className="text-xs font-mono text-sky-400 mb-1">Design System</div>
-          <h3 className="text-base font-semibold text-white group-hover:text-sky-300 transition">
-            Accessible Playground &rarr;
+            href="/contact"
+            className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 transition-all group block"
+            >
+          <span className="text-xs uppercase tracking-wider text-cyan-400 font-semibold block">
+           Full-Stack Serverless Route
+         </span>
+          <h3 className="text-lg font-bold text-white mt-1 group-hover:text-cyan-300">
+            Interactive Message Dispatch &rarr;
           </h3>
-        </Link>
-      </div>
+          <p className="text-xs text-slate-400 mt-2">
+           Live payload validation, ISO timestamping, and server-side state persistence.
+           </p>
+           </Link>
+        </div>
     </main>
   );
 }
