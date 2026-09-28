@@ -15,3 +15,20 @@
     animation: none !important;
   }
 }
+
+/* --- Added for Step 3: Mobile Optimization --- */
+
+/* Prevent iOS & Android browser auto-zooming when focusing inputs */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Guard against horizontal viewport overflow on mobile screens */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
