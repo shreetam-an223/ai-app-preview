@@ -45,6 +45,12 @@ export default function RootLayout({
               >
                 Contact
               </Link>
+              <Link
+                href="/3d"
+                className="px-3 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition-colors min-h-[44px] flex items-center"
+              >
+                3D Experience
+              </Link>
               <a
                 href="https://github.com/shreetam-an223"
                 target="_blank"
