@@ -140,30 +140,38 @@ export default function ContactPage() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 transition-all shadow-lg shadow-cyan-900/30 cursor-pointer"
+            aria-busy={status === "submitting"}
+            aria-label={status === "submitting" ? "Dispatching message to backend" : "Dispatch message to backend"}
+            className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 transition-all shadow-lg shadow-cyan-900/30 cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:outline-none"
           >
             {status === "submitting" ? "Validating & Processing..." : "Dispatch to Backend"}
           </button>
 
-          {feedback && (
+            {feedback && (
             <div
-              role="alert"
-              className={`p-4 rounded-xl text-sm font-medium border ${
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className={`p-4 rounded-xl text-sm font-medium border transition-all ${
                 status === "success"
                   ? "bg-emerald-950/50 border-emerald-700 text-emerald-300"
                   : "bg-rose-950/50 border-rose-700 text-rose-300"
               }`}
-            >
+                >
               {feedback}
-            </div>
+              </div>
           )}
         </form>
 
         {/* Live Backend Confirmation & State Viewer */}
         {latestSubmission && (
-          <div className="mt-8 bg-slate-900/40 border border-emerald-800/40 rounded-2xl p-6">
+          <section 
+            aria-label="Server Verification Output" 
+            aria-live="polite"
+            className="mt-8 bg-slate-900/40 border border-emerald-800/40 rounded-2xl p-6"
+          >
             <h3 className="text-sm font-bold uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true"></span>
               Live Backend Verification
             </h3>
             <div className="space-y-1.5 text-xs text-slate-300 font-mono">
@@ -172,7 +180,7 @@ export default function ContactPage() {
               <p><span className="text-slate-500">Timestamp:</span> {latestSubmission.timestamp}</p>
               <p><span className="text-slate-500">Message:</span> &ldquo;{latestSubmission.message}&rdquo;</p>
             </div>
-          </div>
+          </section>
         )}
       </div>
     </main>

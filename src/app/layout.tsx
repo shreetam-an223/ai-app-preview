@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "AI Production Preview | Shreetam",
-  description: "AI Frontend Engineering Portfolio and Interactive Prototypes",
+  description: "AI Frontend Engineering Portfolio with verified accessibility and performance benchmarks",
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
@@ -16,13 +16,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="bg-[#070b14] text-slate-100 min-h-screen antialiased selection:bg-cyan-500 selection:text-white">
-        <header className="sticky top-0 z-50 backdrop-blur-md bg-[#070b14]/80 border-b border-slate-800/80">
-          <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
+
+        <header role="banner" className="sticky top-0 z-50 backdrop-blur-md bg-[#070b14]/80 border-b border-slate-800/80">
+          <nav aria-label="Main Navigation" className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
             <Link
               href="/"
               className="flex items-center gap-2 font-bold text-sm tracking-wide text-white min-h-[44px] py-1"
+              aria-label="AI Production Preview Home"
             >
-              <span className="h-2.5 w-2.5 rounded-full bg-cyan-400"></span>
+              <span className="h-2.5 w-2.5 rounded-full bg-cyan-400" aria-hidden="true"></span>
               <span>AI Production Preview</span>
             </Link>
 
@@ -55,6 +60,7 @@ export default function RootLayout({
                 href="https://github.com/shreetam-an223"
                 target="_blank"
                 rel="noreferrer"
+                aria-label="Visit Shreetam's GitHub Profile"
                 className="px-3 py-2 rounded-lg bg-cyan-950/70 border border-cyan-800/60 text-cyan-300 hover:bg-cyan-900/50 transition-colors min-h-[44px] flex items-center ml-1"
               >
                 GitHub
@@ -63,9 +69,9 @@ export default function RootLayout({
           </nav>
         </header>
 
-        <div className="w-full overflow-x-hidden">
+        <main id="main-content" role="main" className="w-full overflow-x-hidden">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );
