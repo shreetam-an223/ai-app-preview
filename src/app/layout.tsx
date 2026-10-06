@@ -3,8 +3,39 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Production Preview | Shreetam",
-  description: "AI Frontend Engineering Portfolio with verified accessibility and performance benchmarks",
+  metadataBase: new URL("https://shreetam-dev.vercel.app"),
+  title: {
+    default: "Shreetam Anand | AI Frontend Engineer",
+    template: "%s | Shreetam Anand",
+  },
+  description:
+    "AI Software Interface Engineer building deterministic, accessible, and high-performance web systems.",
+  keywords: [
+    "AI Frontend Engineering",
+    "Next.js",
+    "React Three Fiber",
+    "Accessibility",
+    "Performance Optimization",
+    "Three.js",
+    "Shreetam Anand",
+  ],
+  authors: [{ name: "Shreetam Anand", url: "https://github.com/shreetam-an223" }],
+  creator: "Shreetam Anand",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://shreetam-dev.vercel.app",
+    title: "Shreetam Anand | AI Frontend Engineer",
+    description:
+      "Production-ready AI web systems verified with deterministic speed, zero-error accessibility, and WebGL.",
+    siteName: "Shreetam Anand Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Shreetam Anand | AI Frontend Engineer",
+    description:
+      "Deterministic, accessible, and high-performance AI frontend interfaces.",
+  },
   viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
