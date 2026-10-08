@@ -92,6 +92,12 @@ export default function RootLayout({
               >
                 3D Experience
               </Link>
+              <Link
+                href="/shader"
+                className="px-3 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition-colors min-h-[44px] flex items-center"
+              >
+                Shader Hero
+              </Link>
               <a
                 href="https://github.com/shreetam-an223"
                 target="_blank"
